@@ -7,8 +7,11 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String,
   },
-  Email: {
+  email: {
     type: String,
+    lowercase: true,
+    required: true,
+    unique: true,
   },
 });
 
