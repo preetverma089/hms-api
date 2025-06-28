@@ -3,15 +3,9 @@ export const validationRules = (type) => {
   switch (type) {
     case "signup":
       return [
-        body("userDetails.firstName")
+        body("userDetails.fullName")
           .notEmpty()
-          .withMessage("First name is required")
-          .isAlpha()
-          .withMessage("Only letters allowed"),
-
-        body("userDetails.lastName")
-          .notEmpty()
-          .withMessage("Last name is required")
+          .withMessage("Full name is required")
           .isAlpha()
           .withMessage("Only letters allowed"),
 
@@ -20,6 +14,12 @@ export const validationRules = (type) => {
           .withMessage("Email is required")
           .isEmail()
           .withMessage("Invalid email"),
+
+        body("userDetails.password")
+          .notEmpty()
+          .withMessage("Password is required")
+          .isStrongPassword({ minLength: 5 })
+          .withMessage("Password is too weak"),
       ];
 
     case "login":
@@ -29,6 +29,8 @@ export const validationRules = (type) => {
           .withMessage("Email is required")
           .isEmail()
           .withMessage("Invalid email"),
+
+        body("password").notEmpty().withMessage("Password is required"),
       ];
     default:
       return [];

@@ -1,5 +1,5 @@
 import express from "express";
-import { signUpUser } from "../controllers/UserController.js";
+import { loginUser, signUpUser } from "../controllers/UserController.js";
 import { validate, validationRules } from "../middlewares/validateUser.js";
 const router = express.Router();
 /**
@@ -18,9 +18,9 @@ const router = express.Router();
  *               userDetails:
  *                 type: object
  *                 properties:
- *                   firstName:
+ *                   fullName:
  *                     type: string
- *                   lastName:
+ *                   password:
  *                     type: string
  *                   email:
  *                     type: string
@@ -29,5 +29,25 @@ const router = express.Router();
  *         description: User created successfully
  */
 router.post("/signup", validationRules("signup"), validate, signUpUser);
-
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Login
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *                 properties:
+ *                   email:
+ *                     type: string
+ *                   password:
+ *                     type: string
+ *     responses:
+ *       200:
+ *         description: User login successfully
+ */
+router.post("/login", validationRules("login"), validate, loginUser);
 export default router;
